@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ML API</title>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+	<section>
+    <div id="header">
+        <h1 s><font size="20">Predict Stroke Status</font></h1>
+	</div>  
+	  <div id="result">
+     <font size="20">{{ prediction_text }}</font>
+	 </div>  
+	    
+<form action="{{ url_for('predict')}}" method="post">
+        <!-- Main Input For Receiving Query to our ML -->
+        <div class="row">
+  <div id="column" >
+  เพศ:
+  </div>
+  <div class="toggle" id="column" >
+    <input type="radio" name="SEX" value="1" id="male" checked="checked"/>
+		<label for="male">ผู้ชาย</label>
+		<input type="radio" name="SEX" value="0" id="female" />
+		<label for="female">ผู้หญิง</label>
+  </div>
+</div>
+                <input type="text" name="AGE" placeholder="AGE" required="required" />
+                <input type="text" name="sbp" placeholder="sbp" required="required" />
+                <input type="text" name="dbp" placeholder="dbp" required="required" />
+                <input type="text" name="bw" placeholder="bw" required="required" />
+																 <div class="row">
+  <div id="column" >
+  อาการอัมพฤกษ์ครึ่งซีก:
+  </div>
+  <div class="toggle" id="column" >
+    <input type="radio" name="Hemiparesis" value="1" id="HemiparesisYES" checked="checked"/>
+		<label for="HemiparesisYES">ใช่</label>
+		<input type="radio" name="Hemiparesis" value="0" id="HemiparesisNO" />
+		<label for="HemiparesisNO">ไม่ใช่</label>
+  </div>
+</div>	
+			<div class="row">
+  <div id="column" >
+  อาการอัมพฤกษ์ครึ่งซีก:
+  </div>
+  <div class="toggle" id="column" >
+    <input type="radio" name="Hemianesthesia" value="1" id="HemianesthesiaYES" checked="checked"/>
+		<label for="HemianesthesiaYES">ใช่</label>
+		<input type="radio" name="Hemianesthesia" value="0" id="HemianesthesiaNO" />
+		<label for="HemianesthesiaNO">ไม่ใช่</label>
+  </div>
+</div>			
+	<div class="row">
+  <div id="column" >
+  มีประวัติโรคหลอดเลือดในสมอง:
+  </div>
+  <div class="toggle" id="column" >
+    <input type="radio" name="prev_stroke " value="1" id="prev_stroke YES" checked="checked"/>
+		<label for="prev_stroke YES">ใช่</label>
+		<input type="radio" name="prev_stroke " value="0" id="prev_stroke NO" />
+		<label for="prev_stroke NO">ไม่ใช่</label>
+  </div>
+</div>		
+	    
+       <div class="row">
+  <div id="column" >
+  อาการโรคไต:
+  </div>
+  <div class="toggle" id="column" >
+    <input type="radio" name="ckd" value="1" id="ckdYES" checked="checked"/>
+		<label for="ckdYES">ใช่</label>
+		<input type="radio" name="ckd" value="0" id="ckdNO" />
+		<label for="ckdNO">ไม่ใช่</label>
+  </div>
+</div>		
+       
+              <div class="row">
+  <div id="column" >
+  ใช้ยาละลายลิ่มเลือด:
+  </div>
+  <div class="toggle" id="column" >
+    <input type="radio" name="anticoag" value="1" id="anticoagYES" checked="checked"/>
+		<label for="anticoagYES">ใช่</label>
+		<input type="radio" name="anticoag" value="0" id="anticoagNO" />
+		<label for="anticoagNO">ไม่ใช่</label>
+  </div>
+</div>
+	    
+	    <div class="row">
+  <div id="column" >
+  อาการลิ้นแข็ง:
+  </div>
+  <div class="toggle" id="column" >
+    <input type="radio" name="dysarthria" value="1" id="dysarthriaYES" checked="checked"/>
+		<label for="dysarthriaYES">ใช่</label>
+		<input type="radio" name="dysarthria" value="0" id="dysarthriaNO" />
+		<label for="dysarthriaNO">ไม่ใช่</label>
+  </div>
+</div>		 
+
+<div class="row">
+  <div id="column" >
+  พูดไม่ออกฟังไม่เข้าใจ:
+  </div>
+  <div class="toggle" id="column" >
+    <input type="radio" name="aphasia" value="1" id="aphasiaYES" checked="checked"/>
+		<label for="aphasiaYES">ใช่</label>
+		<input type="radio" name="aphasia" value="0" id="aphasiaNO" />
+		<label for="aphasiaNO">ไม่ใช่</label>
+  </div>
+</div>	           
+  
+	    <div class="row">
+  <div id="column" >
+  สูบบุหรี่:
+  </div>
+  <div class="toggle" id="column" >
+    <input type="radio" name="smoking" value="1" id="smokingYES" checked="checked"/>
+		<label for="smokingYES">ใช่</label>
+		<input type="radio" name="smoking" value="0" id="smokingNO" />
+		<label for="smokingNO">ไม่ใช่</label>
+  </div>
+</div>	        
+                
+                
+                <input type="text" name="nihss_combind" placeholder="nihss_combind" required="required" />
+                 <div class="row">
+  <div id="column" >
+ ความดันโลหิตในกะโหลกศีรษะ:
+  </div>
+  <div class="toggle" id="column" >
+    <input type="radio" name="ich_sym" value="1" id="ich_symYES" checked="checked"/>
+		<label for="ich_symYES">ใช่</label>
+		<input type="radio" name="ich_sym" value="0" id="ich_symNO" />
+		<label for="ich_symNO">ไม่ใช่</label>
+  </div>
+</div>	
+
+                <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+                
+            </form>
+        </>
+    </div>
+	</section>
+</body>
+
+</html>
+
+  
+					    
